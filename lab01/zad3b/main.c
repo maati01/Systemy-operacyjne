@@ -16,7 +16,7 @@ clock_t end_time;
 struct tms start_tms;
 struct tms end_tms;
 
-char result_file[] = "results3a.txt";
+char result_file[] = "results3b.txt";
 
 #ifdef dynamic
 void dynamic_handler(){

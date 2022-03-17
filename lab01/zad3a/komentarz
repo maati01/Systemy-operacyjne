@@ -1,0 +1,6 @@
+Wyniki czasowe często mają wartość 0.
+Jedynie dla dużych plikow np. 128MB czasy zwiększają się. 
+Najbardziej czasochłonne są zliczania linii, słów i znaków.
+Znacznie szybsze jest zapisywanie i usuwanie bloków pamięci.
+Czas rzeczywsity i użytkownika jest większy od czasu systemowego.
+Czas rzeczywisty jest zazwyczaj delikatnie większy od czasu użytkownika.

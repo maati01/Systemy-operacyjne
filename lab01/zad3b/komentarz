@@ -1,0 +1,4 @@
+Różnice między optymalizacją O0,O2 i Os nie są zbyt duże.
+Zazwyczaj O2 wypada najlepiej, przy zacznie wiekszych testach różnica
+byłaby bardziej zauważalna.
+Są testy w których pojedyncze wyniki czasowe O0, O2 i Os są takie same.

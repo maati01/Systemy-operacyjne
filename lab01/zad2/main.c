@@ -21,9 +21,8 @@ void save_and_remove_blocks(int size){
 }
 
 int count_number_of_files(char** array,int index){
-    FILE* file;
     int cnt = 0;
-    while(file = fopen(array[index],"r")){
+    while(access(array[index], F_OK) == 0){
         cnt++;
         index++;
     }
@@ -71,8 +70,8 @@ void start_timer(){
 void end_timer(char* command){
     end_time = times(&end_tms);
     double real_time =  calculate_time_in_second(start_time, end_time);
-    double user_time = calculate_time_in_second(start_tms.tms_utime, end_tms.tms_utime);
-    double system_time = calculate_time_in_second(start_tms.tms_stime, end_tms.tms_stime);
+    double user_time = calculate_time_in_second(start_tms.tms_cutime, end_tms.tms_cutime);
+    double system_time = calculate_time_in_second(start_tms.tms_cstime, end_tms.tms_cstime);
 
     print_and_save_stats(real_time, user_time, system_time, command);
 
