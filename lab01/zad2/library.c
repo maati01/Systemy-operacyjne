@@ -16,8 +16,8 @@ void remove_block(int index){
     free(blocks[index]);
 }
 
-int reserve_memory(char* temporary_file,int index){
-    FILE* temporary_file_to_save = fopen(temporary_file, "r");
+int reserve_memory(int index){
+    FILE* temporary_file_to_save = fopen(temporary_file_name , "r");
     fseek(temporary_file_to_save, 0L, SEEK_END);
 
     blocks[index] = calloc(ftell(temporary_file_to_save),sizeof(char));

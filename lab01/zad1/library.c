@@ -27,7 +27,7 @@ int reserve_memory(char* temporary_file,int index){
 
 void count_lines_and_chars(int size, char** files){
 
-    for(int i = 1; i < size; i++){
+    for(int i = 0; i < size; i++){
         file = fopen(files[i], "r");
         int command_length = 7 + strlen(files[i]) + strlen(temporary_file_name);
         char* command = calloc(command_length,sizeof(char)); 
