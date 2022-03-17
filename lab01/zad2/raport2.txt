@@ -1,0 +1,80 @@
+create_table
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+wc_files
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+remove_block
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+reserve_memory
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+create_table
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+wc_files
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+remove_block
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+reserve_memory
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+remove_block
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+reserve_memory
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+create_table
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+wc_files
+Real time: 1.000000
+User time: 0.000000
+Sys time: 0.000000
+
+remove_block
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+reserve_memory
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+remove_block
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
+reserve_memory
+Real time: 0.000000
+User time: 0.000000
+Sys time: 0.000000
+
