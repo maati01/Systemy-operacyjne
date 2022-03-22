@@ -1,4 +1,8 @@
-library version
-Real time: 0.000000
-User time: 0.000000
-Sys time: 0.000000
+System version times:
+real 0.06
+user 0.03
+sys 0.00
+Library version times:
+real 0.03
+user 0.02
+sys 0.00
