@@ -7,4 +7,4 @@ void remove_block(int index);
 int reserve_memory(char* temporary_file,int index);
 void count_lines_and_chars(int size, char** files);
 
-#endif //lab01
+#endif //lab01_H
