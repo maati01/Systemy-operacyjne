@@ -7,7 +7,6 @@
 #include <time.h>
 #include <ftw.h>
 
-
 #define _XOPEN_SOURCE 500
 
 int file_cnt = 0;
@@ -18,17 +17,18 @@ int fifo_cnt = 0;
 int slink_cnt = 0;
 int socket_cnt = 0;
 
-// struct stat stats;
-// struct FTW* ftw_struct;
          
-char* convert_time(long int time_sec) {
+void convert_and_print_time(long int atime, long int mtime) {
     char* date = calloc(20, sizeof(char));
-    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&time_sec));
-    return date;
+    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&atime));
+    printf("Date of last access: %s\n", date);
+    
+    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&atime));
+    printf("Date of last modification: %s\n", date);
+    free(date);
 }
 
 int file_stats (const char* file_path,const struct stat* stats, int flag, struct FTW* ftw_struct){
-    // stat(file_path, &stats);
 
     switch (flag)
     {
@@ -44,10 +44,7 @@ int file_stats (const char* file_path,const struct stat* stats, int flag, struct
         file_cnt++;
         printf("Type name: regular file\n");
         break;
-    default:
-        break;
     }
-
     switch (stats->st_mode & S_IFMT)
     {
     case S_IFBLK:
@@ -72,8 +69,7 @@ int file_stats (const char* file_path,const struct stat* stats, int flag, struct
     printf("Path: %s\n", file_path);
     printf("Number of links: %ld\n", stats->st_nlink);
     printf("Size: %ld\n", stats->st_size);
-    printf("Date of last access: %s\n", convert_time(stats->st_atime));
-    printf("Date of last modification: %s\n", convert_time(stats->st_mtime));
+    convert_and_print_time(stats->st_atime, stats->st_mtime);
     printf("\n");
     
     return 0;
@@ -93,7 +89,7 @@ int main(int argc, char** argv){
     char* path = realpath(argv[1], NULL);
     int fd_limit = 5;
 
-    nftw(path, file_stats, fd_limit, FTW_D | FTW_F | FTW_SL);
+    nftw(path, file_stats, fd_limit, FTW_D | FTW_F| FTW_SL);
     print_counters();
 
     return 0;

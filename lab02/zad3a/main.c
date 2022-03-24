@@ -16,10 +16,14 @@ int socket_cnt = 0;
 
 struct stat stats;
 
-char* convert_time(long int time_sec) {
+void convert_and_print_time() {
     char* date = calloc(20, sizeof(char));
-    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&time_sec));
-    return date;
+    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&stats.st_atime));
+    printf("Date of last access: %s\n", date);
+
+    strftime(date, 20, "%Y-%m-%d %H:%M:%S", localtime(&stats.st_mtime));
+    printf("Date of last modification: %s\n", date);
+    free(date);
 }
 
 void file_stats(char* file_path, int type, char* file_name){
@@ -63,8 +67,7 @@ void file_stats(char* file_path, int type, char* file_name){
     printf("Path: %s\n", file_path);
     printf("Number of links: %ld\n", stats.st_nlink);
     printf("Size: %ld\n", stats.st_size);
-    printf("Date of last access: %s\n", convert_time(stats.st_atime));
-    printf("Date of last modification: %s\n", convert_time(stats.st_mtime));
+    convert_and_print_time();
     printf("\n");
 }
 
@@ -90,7 +93,7 @@ void iterate_through_dir(char* dir_path, char* file_name){
                 file_stats(curr_path, entry->d_type, entry->d_name);
             }
 
-        free(curr_path);
+            free(curr_path);
         }
         entry = readdir(dir);
     }
