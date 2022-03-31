@@ -1,0 +1,18 @@
+Processes: 10000   Width: 0.010000
+Real time: 2.300000
+User time: 1.370000
+Sys time: 0.070000
+Result: 3.151574
+
+Processes: 25000   Width: 0.001000
+Real time: 11.180000
+User time: 4.420000
+Sys time: 0.220000
+Result: 3.142590
+
+Processes: 15000   Width: 0.000100
+Real time: 10.870000
+User time: 3.320000
+Sys time: 0.200000
+Result: 3.141729
+
