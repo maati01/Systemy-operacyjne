@@ -9,11 +9,16 @@ int COUNT_SIGNAL = SIGUSR1;
 int END_SIGNAL = SIGUSR2;
 int wait = 1;
 int signals_in_catcher;
+int catching = 1;
+
+void sigusr2_handle() {
+    catching = 0;
+}
 
 void send_handler(int sig, siginfo_t *info, void *ucontext) {
     if (sig != COUNT_SIGNAL)
         return;
-    wait = 1;
+    // wait = 1;
     signals_back++;
 }
 
@@ -22,7 +27,6 @@ void finish_handler(int sig, siginfo_t *info, void *ucontext) {
         return;
     wait = 0;
     signals_in_catcher = info->si_value.sival_int;
-    // sender_pid = info->si_pid;;
 }
 
 int main(int argc, char** argv){
@@ -64,16 +68,14 @@ int main(int argc, char** argv){
     sigset_t newmask;
     sigemptyset(&newmask); 
     sigaddset(&newmask, END_SIGNAL); 
-
     while(wait){
         sigsuspend(&newmask);
     }
 
     printf("sender PID: %d\n", getpid());
-    printf("catcher PID %d\n", catcher_pid);
+    printf("catcher PID: %d\n", catcher_pid);
     printf("n: %d\n", n_send);
     printf("mode: %s\n", mode);
-    // printf("signals in catcher: %d\n", signals_in_catcher);
     printf("signals in sender: %d\n", signals_back);
     return 0;
 }

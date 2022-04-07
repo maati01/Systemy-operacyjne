@@ -1,0 +1,27 @@
+kill
+sender PID: 10275
+catcher PID: 10266
+n: 20000
+mode: kill
+signals in sender: 1
+signals in catcher: 5566
+
+sigrt
+sender PID: 10342
+catcher PID 10341
+n: 15000
+mode: sigrt
+signals in sender: 15000
+signals in catcher: 15000
+
+sigqueue
+sender PID: 10352
+catcher PID 10351
+n: 20000
+mode: sigqueue
+signals in sender: 1
+signals in catcher: 5533
+
+Liczba odebranych sygnalow w catcherze dla przypadku kill oraz sigqueue jest znacznie mniejsza od wyslanych.
+Z jakiegos powodu po wyslaniu z catchera to sendera odebrany jest tylko jeden sygnal.
+Tak jak oczekiwano, sigrt pozwala przechwycic wszystkie sygnaly.

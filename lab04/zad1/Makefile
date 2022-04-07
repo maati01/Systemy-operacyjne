@@ -2,6 +2,7 @@ CC = gcc -Wall
 run:
 	$(CC) -o main main.c
 	$(CC) -o execl execl.c
+	make tests
 
 tests:
 	for com in ignore handler mask pending ; do \

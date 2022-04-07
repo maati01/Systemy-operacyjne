@@ -1,0 +1,30 @@
+ignore fork
+[PARENT] SIGUSR1 ignored
+[CHILD] SIGUSR1 ignored
+[PARENT] SIGUSR1 ignored
+ignore exec
+[CHILD] SIGUSR1 ignored
+handler fork
+Signal received!
+Signal received!
+handler exec
+mask fork
+[PARENT] signal blocked: true
+[PARENT] SIGUSR1 masked
+[CHILD] SIGUSR1 masked
+[PARENT] signal blocked: true
+[PARENT] SIGUSR1 masked
+mask exec
+[CHILD] SIGUSR1 masked
+pending fork
+[PARENT] signal blocked: true
+[PARENT] signal list read: true
+[PARENT] SIGUSR1 pending: yes
+[CHILD] signal list read: true
+[CHILD] SIGUSR1 pending: no
+[PARENT] signal blocked: true
+[PARENT] signal list read: true
+[PARENT] SIGUSR1 pending: yes
+pending exec
+[CHILD] ignal list read: true
+[CHILD] SIGUSR1 pending: yes

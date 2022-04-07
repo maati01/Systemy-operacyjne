@@ -1,0 +1,16 @@
+flag: SA_SIGINFO
+Signal number: 2
+PID: 10634
+
+Child stopped!
+flag: SA_NOCLDSTOP
+Signal number: 0
+child PID: 0
+Exit code 0
+
+Current stack address 0x7ffeb1ab2288
+Process exceeded its stack limit
+Alternative stack address 0x556fe0702160
+flag: SA_ONSTACK
+Signal number: 0
+PID: 0

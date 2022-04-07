@@ -15,7 +15,7 @@ int main(int argc, char** argv){
     {
         sigset_t curr_mask;
         sigemptyset(&curr_mask);
-        printf("[CHILD] the signal list has been read: %s\n", sigpending(&curr_mask) == 0 ? "true" : "false");
+        printf("[CHILD] ignal list read: %s\n", sigpending(&curr_mask) == 0 ? "true" : "false");
         printf("[CHILD] SIGUSR1 pending: %s\n", sigismember(&curr_mask, SIGUSR1) ? "yes" : "no");
                 
     }

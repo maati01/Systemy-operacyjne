@@ -27,7 +27,7 @@ int main(int argc, char** argv){
         sigset_t newmask;/* sygnały do blokowania */
         sigemptyset(&newmask);
         sigaddset(&newmask, SIGUSR1);
-        printf("[PARENT] the signal has been blocked: %s\n", sigprocmask(SIG_BLOCK, &newmask, NULL) < 0 ? "false" : "true");
+        printf("[PARENT] signal blocked: %s\n", sigprocmask(SIG_BLOCK, &newmask, NULL) < 0 ? "false" : "true");
         printf("[PARENT] SIGUSR1 masked\n");
         raise(SIGUSR1);
 
@@ -36,9 +36,9 @@ int main(int argc, char** argv){
         sigset_t newmask;
         sigemptyset(&newmask);
         sigaddset(&newmask, SIGUSR1);
-        printf("[PARENT] the signal has been blocked: %s\n", sigprocmask(SIG_BLOCK, &newmask, NULL) < 0 ? "false" : "true");
+        printf("[PARENT] signal blocked: %s\n", sigprocmask(SIG_BLOCK, &newmask, NULL) < 0 ? "false" : "true");
         raise(SIGUSR1);
-        printf("[PARENT] the signal list has been read: %s\n", sigpending(&newmask) == 0 ? "true" : "false");
+        printf("[PARENT] signal list read: %s\n", sigpending(&newmask) == 0 ? "true" : "false");
         printf("[PARENT] SIGUSR1 pending: %s\n", sigismember(&newmask, SIGUSR1) ? "yes" : "no");
     }
 
@@ -57,7 +57,7 @@ int main(int argc, char** argv){
             {
                 sigset_t curr_mask;
                 sigemptyset(&curr_mask);
-                printf("[CHILD] the signal list has been read: %s\n", sigpending(&curr_mask) == 0 ? "true" : "false");
+                printf("[CHILD] signal list read: %s\n", sigpending(&curr_mask) == 0 ? "true" : "false");
                 printf("[CHILD] SIGUSR1 pending: %s\n", sigismember(&curr_mask, SIGUSR1) ? "yes" : "no");
             }
         }
