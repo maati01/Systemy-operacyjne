@@ -56,73 +56,99 @@ void read_commands(char** commands, int size){
     fclose(input);
 }
 
-void run_program(char** components, char** commands, int size){
-    int pipes[256][2];
+void run_line(char* line, char** components){
+    int size = 0;
+    char* commands_counter[256];
+    while (*line) { 
+        if ( isdigit(*line) || ( (*line=='-'||*line=='+') && isdigit(*(line+1)) )) {
+            long val = strtol(line, &line, 10);
+            commands_counter[size] = components[val-1];
+            size++;
+        } else {
+            line++;
+        }
+    }
+    char* args[6][3];
+    for (int i = 0; i < 6; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            args[i][j] = NULL;
+        }
+    }
 
-    for (int i = 0; i < 256; ++i) {
+    int idx = 0;
+    int arg_idx = 0;
+    for(int i = 0; i < size; i++){
+        char* curr_command = commands_counter[i];
+        char* token = strtok(curr_command, " ");
+        while(token != NULL){
+            if(strcmp(token,"|")!=0){
+                args[arg_idx][idx] = token;
+                idx++;
+            }else{
+                idx = 0;
+                arg_idx++;
+            }
+            token = strtok(NULL, " ");
+        }
+        args[arg_idx][1][strlen(args[arg_idx][1])-1] = '\0';
+        arg_idx++;
+        idx = 0;
+    }
+
+    int pipes[6][2];
+
+    for (int i = 0; i < arg_idx -1; ++i) {
         if (pipe(pipes[i]) < 0) {
             exit(EXIT_FAILURE);
         }
     }
-
-    for(int i = 0; i < size; i++){
-        int commands_counter[256];
-        int size = 0;
-
-        while (*commands[i]) { 
-            if ( isdigit(*commands[i]) || ( (*commands[i]=='-'||*commands[i]=='+') && isdigit(*(commands[i]+1)) )) {
-                long val = strtol(commands[i], &commands[i], 10);
-                commands_counter[size] = val;
-                size++;
-            } else {
-                commands[i]++;
+    for (int i = 0; i < arg_idx; ++i) {
+        printf("1:%s\n",args[i][0]);
+        printf("2:%s\n",args[i][1]);
+        printf("3:%s\n",args[i][2]);
+        pid_t pid = fork();
+        if (pid == 0) {
+            if (i != arg_idx - 1) {
+                dup2(pipes[i][1], STDOUT_FILENO);
             }
-        }
-        for(int j = 0; j < size; j++){
-            pid_t pid = fork();
-            if(pid < 0){
-                exit(EXIT_FAILURE);
-            }else if(pid == 0){
-                if(j > 0){
-                    dup2(pipes[j - 1][0], STDIN_FILENO);
-                }
-                dup2(pipes[j][1], STDOUT_FILENO);
+
+            if (i != 0) {
+                dup2(pipes[i - 1][0], STDIN_FILENO);
             }
+
+            for (int j = 0; j < arg_idx -1 ; ++j) {
+                close(pipes[j][0]);
+                close(pipes[j][1]);
+            }
+            execvp(args[i][0], args[i]);
             
-            for (int k = 0; k < size; k++){
-                close(pipes[k][0]);
-                close(pipes[k][1]);
-            }
-            // tutaj trzeba przygotowac argumenty 
-            execvp(components[commands_counter[j]][0],components[commands_counter[j]][0]);
-            exit(0);
+            exit(EXIT_FAILURE);
         }
-        for (int j = 0; j < size - 1; ++j){
-            close(pipes[j][0]);
-            close(pipes[j][1]);
-        }
-        for (int j = 0; j < size; ++j){
-            wait(0);
-        }
+    }
 
+    for (int i = 0; i < arg_idx - 1; ++i) {
+        close(pipes[i][1]);
+    }
+
+    for (int i = 0; i < arg_idx; ++i) {
+        wait(0);
     }
 }
 
 int main(int argc, char** argv){
-    int number = find_components_number(argv[1]);
+    int size = find_components_number(argv[1]);
 
-    char** components = calloc(number, sizeof(char*));
-    read_components(argv[1],components, number);
+    char** components = calloc(size, sizeof(char*));
+    read_components(argv[1],components, size);
     
-    number = lines - number;
-    char** commands = calloc(number-1, sizeof(char*));
-    read_commands(commands,number);
+    size = lines - size;
+    char** commands = calloc(size-1, sizeof(char*));
+    read_commands(commands,size);
 
-    // printf("%s", commands[0]); 
-    // printf("%s", commands[1]); 
-    // printf("%s", commands[2]); 
-    // printf("%s", commands[3]); 
-    run_program(components, commands, number);
+    // printf("%s\n",commands[3]);
+    // for(int i = 0; i < size; i++){
+    run_line(commands[0], components);
+    // }
     
     free(commands);
     free(components);
