@@ -30,7 +30,6 @@ int find_components_number(char* file_name){
 }
 
 void read_components(char* file_name, char** components, int size){
-    // int number = find_components_number(file_name);
     input = fopen(file_name, "r");
     char line[256];
 
@@ -59,6 +58,7 @@ void read_commands(char** commands, int size){
 void run_line(char* line, char** components){
     int size = 0;
     char* commands_counter[256];
+
     while (*line) { 
         if ( isdigit(*line) || ( (*line=='-'||*line=='+') && isdigit(*(line+1)) )) {
             long val = strtol(line, &line, 10);
@@ -68,6 +68,7 @@ void run_line(char* line, char** components){
             line++;
         }
     }
+
     char* args[6][3];
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 3; ++j) {
@@ -78,7 +79,8 @@ void run_line(char* line, char** components){
     int idx = 0;
     int arg_idx = 0;
     for(int i = 0; i < size; i++){
-        char* curr_command = commands_counter[i];
+        char* curr_command = calloc(strlen(commands_counter[i]),sizeof(char*));
+        memcpy(curr_command, commands_counter[i], strlen(commands_counter[i]));
         char* token = strtok(curr_command, " ");
         while(token != NULL){
             if(strcmp(token,"|")!=0){
@@ -103,9 +105,6 @@ void run_line(char* line, char** components){
         }
     }
     for (int i = 0; i < arg_idx; ++i) {
-        printf("1:%s\n",args[i][0]);
-        printf("2:%s\n",args[i][1]);
-        printf("3:%s\n",args[i][2]);
         pid_t pid = fork();
         if (pid == 0) {
             if (i != arg_idx - 1) {
@@ -145,11 +144,10 @@ int main(int argc, char** argv){
     char** commands = calloc(size-1, sizeof(char*));
     read_commands(commands,size);
 
-    // printf("%s\n",commands[3]);
-    // for(int i = 0; i < size; i++){
-    run_line(commands[0], components);
-    // }
-    
+    for(int i = 0; i < size; i++){
+        run_line(commands[i], components);
+    }
+
     free(commands);
     free(components);
     return 0;
