@@ -32,4 +32,19 @@ struct client_info {
     int pid;
 };
 
+int string_to_type(char *string) {
+    if (strcmp(string, "STOP") == 0) {
+        return STOP;
+    }
+    if (strcmp(string, "LIST") == 0) {
+        return LIST;
+    }
+    if (strcmp(string, "TO_ALL") == 0) {
+        return TO_ALL;
+    }
+    if (strcmp(string, "TO_ONE") == 0) {
+        return TO_ONE;
+    }
+    return -1;
+}
 #endif  //HELPER_H

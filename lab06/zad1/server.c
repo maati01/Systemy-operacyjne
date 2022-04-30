@@ -16,7 +16,7 @@ int server_id;
 void signal_handler(int signal_num) {
     printf("Server: Signal SIGINT received\n");
     is_server_running = 0;
-
+    exit(0);
     // if (active_users_counter > 0) {
     //     send_shutdown_to_all_clients();
     // } else {
@@ -25,11 +25,12 @@ void signal_handler(int signal_num) {
 }
 
 void stop(){
-
+    printf("[server] Client stopped, id: %d\n", client.msg_text.id);
+    clients[client.msg_text.id].id = -1;
 }
 
 void list(){
-    printf("Clients\n");
+    printf("Clients: \n");
     // printf("%-10s %-10s %-10s\n", "client_id", "msqid", "pid");
     for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
         if (clients[i].id != -1) {
@@ -39,7 +40,24 @@ void list(){
 }
 
 void to_all(){
+    printf("Meesage sent to all!\n");
 
+    // server_msg.mtext.time = client_msg.mtext.time;
+    server.msg_type = TO_ALL;
+    // server.msg_text.id = client.msg_text.id;
+    // server.msg_text.info = 0;
+    strcpy(server.msg_text.buf, client.msg_text.buf);
+    printf("CURRENT : %d\n", client.msg_text.id);
+    for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
+        if (clients[i].id != -1 ){
+            if(msgsnd(clients[i].pid, &server, sizeof(server.msg_text), 0) == -1){
+                error("PRZYPS\n");
+            };
+            printf("SENT TO: %d\n", clients[i].id);
+            printf("QID: %d\n", clients[i].pid);
+        } 
+        
+    }
 }
 
 void to_one(){
@@ -48,14 +66,15 @@ void to_one(){
 
 void new_client(){
     clients[curr_usr_id].id = curr_usr_id;
+    // printf("1: %d\n", clients[curr_usr_id].qid);
     // clients[i].msqid = client_msg.mtext.info;
-    // clients[curr_id].pid = client_msg.mtext.id;
-
+    clients[curr_usr_id].pid = client.msg_text.info;
+    printf("CLIENT PID: %d\n",clients[curr_usr_id].pid);
     server.msg_type = NEW_CLIENT;
     server.msg_text.id = curr_usr_id;
     server.msg_text.info = -1;
+    
     strcpy(server.msg_text.buf, "");
-    printf("%d\n",client.msg_text.info);
     if (msgsnd(client.msg_text.info, &server, sizeof(server.msg_text), 0) == -1) {
         error("Error while sending INIT message");
     }
@@ -92,7 +111,6 @@ void run_command(){
 }
 
 int main(int argc, char** argv){
-    int client_id = 0;
 
     for (int i = 0; i < MAX_CLIENTS_NUMBER; i++) {
         clients[i].id = -1;
@@ -102,6 +120,8 @@ int main(int argc, char** argv){
 
     key_t key = ftok(homedir, PROJ_ID);
     server_id = msgget(key, IPC_CREAT | QUEUE_PERMISSIONS);
+    printf("[SERVER] KEY %d\n", key);
+    printf("[SERVER] ID %d\n", server_id);
 
     struct sigaction action;
     action.sa_handler = signal_handler;
@@ -112,13 +132,14 @@ int main(int argc, char** argv){
     printf("Server is running!\n");
 
     while (is_server_running) {
-        if (msgrcv(server_id, &client, sizeof(struct msg_text), -100, 0) == -1) {
-            if (EINTR != errno) {  // ignore interrupting by SIGINT
-                printf("Server: ERROR while reading input data!");
-            }
-            run_command();
-        }else {
-            printf("type: %ld id: %d meesage: %s\n",server.msg_type, server.msg_text.id,server.msg_text.buf);        
+        // while (msgrcv(server_id, &client, sizeof(client.msg_text), -100, IPC_NOWAIT) != -1) {
+        //     run_command();
+        // }
+        // if (ENOMSG != errno) {  // ignore interrupting by SIGINT
+        //         printf("Server: ERROR while reading input data!");
+        // }        
+        if(msgrcv(server_id, &client, sizeof(client.msg_text), 0, 0) != 1){
+            printf("NEW COMMAND %s \n", client.msg_text.buf);
         }
         run_command();
         // if (errno != ENOMSG) perror("Error while receiving message");
