@@ -30,54 +30,60 @@ void stop(){
 }
 
 void list(){
-    printf("Clients: \n");
-    // printf("%-10s %-10s %-10s\n", "client_id", "msqid", "pid");
+    char buf[256] = "";
+    char temp_str[256];
+
     for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
         if (clients[i].id != -1) {
-            printf("id: %d\n", clients[i].id);
+            sprintf(temp_str, "%d\n", clients[i].id);
+            strcat(buf, temp_str);
         }
     }
+    server.msg_type = LIST;
+    strcpy(server.msg_text.buf, buf);
+    msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0);
 }
 
 void to_all(){
     printf("Meesage sent to all!\n");
 
-    // server_msg.mtext.time = client_msg.mtext.time;
     server.msg_type = TO_ALL;
-    // server.msg_text.id = client.msg_text.id;
-    // server.msg_text.info = 0;
     strcpy(server.msg_text.buf, client.msg_text.buf);
-    printf("CURRENT : %d\n", client.msg_text.id);
+
     for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
-        if (clients[i].id != -1 ){
-            if(msgsnd(clients[i].pid, &server, sizeof(server.msg_text), 0) == -1){
+        if (clients[i].id != -1 && clients[i].qid != client.msg_text.id){
+            if(msgsnd(clients[i].qid, &server, sizeof(server.msg_text), 0) == -1){
                 error("PRZYPS\n");
             };
-            printf("SENT TO: %d\n", clients[i].id);
-            printf("QID: %d\n", clients[i].pid);
         } 
         
     }
 }
 
 void to_one(){
+    int target_id;
+    char* command;
 
+    target_id = atoi(strtok_r(client.msg_text.buf, " ", &command));
+
+    server.msg_type = TO_ONE;
+    strcpy(server.msg_text.buf, command);
+    msgsnd(clients[target_id].qid, &server, sizeof(server.msg_text), 0);
+    //uzyc wrong id
 }
 
 void new_client(){
     clients[curr_usr_id].id = curr_usr_id;
-    // printf("1: %d\n", clients[curr_usr_id].qid);
-    // clients[i].msqid = client_msg.mtext.info;
-    clients[curr_usr_id].pid = client.msg_text.info;
-    printf("CLIENT PID: %d\n",clients[curr_usr_id].pid);
+    clients[curr_usr_id].qid = client.msg_text.id;
+
     server.msg_type = NEW_CLIENT;
     server.msg_text.id = curr_usr_id;
-    server.msg_text.info = -1;
     
     strcpy(server.msg_text.buf, "");
-    if (msgsnd(client.msg_text.info, &server, sizeof(server.msg_text), 0) == -1) {
+    if (msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0) == -1) {
         error("Error while sending INIT message");
     }
+
     printf("[server] New client with id: %d\n", curr_usr_id);
 
     ++curr_usr_id;
@@ -86,23 +92,23 @@ void new_client(){
 void run_command(){
     switch (client.msg_type) {
         case STOP:
-            printf(">>> STOP\n");
+            printf(">> STOP\n");
             stop();
             break;
         case LIST:
-            printf(">>> LIST\n");
+            printf(">> LIST\n");
             list();
             break;
         case TO_ALL:
-            printf(">>> TO ALL\n");
+            printf(">> TO ALL\n");
             to_all();
             break;
         case TO_ONE:
-            printf(">>> TO ONE\n");
+            printf(">> TO ONE\n");
             to_one();
             break;
         case NEW_CLIENT:
-            printf(">>> NEW CLIENT\n");
+            printf(">> NEW CLIENT\n");
             new_client();
             break;
         default:
@@ -132,24 +138,10 @@ int main(int argc, char** argv){
     printf("Server is running!\n");
 
     while (is_server_running) {
-        // while (msgrcv(server_id, &client, sizeof(client.msg_text), -100, IPC_NOWAIT) != -1) {
-        //     run_command();
-        // }
-        // if (ENOMSG != errno) {  // ignore interrupting by SIGINT
-        //         printf("Server: ERROR while reading input data!");
-        // }        
-        if(msgrcv(server_id, &client, sizeof(client.msg_text), 0, 0) != 1){
-            printf("NEW COMMAND %s \n", client.msg_text.buf);
+        if(msgrcv(server_id, &client, sizeof(client.msg_text), 0, 0) == 1){
+            printf("ERROR");
         }
         run_command();
-        // if (errno != ENOMSG) perror("Error while receiving message");
-        //     execute_command(&message, &response);
-        
-
-        // if (message.msg_type == STOP)
-        //     continue;
-
-        // send_message(actual_usr_id, &response, 0);
     }
     
     msgctl(server_id, IPC_RMID, NULL);

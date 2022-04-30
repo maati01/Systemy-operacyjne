@@ -12,12 +12,12 @@
 #define TO_ALL 3
 #define TO_ONE 4
 #define NEW_CLIENT 5
+#define WRONG_ID 6
 
 #include <time.h>
 
 struct msg_text {
     int id;
-    int info;
     struct tm time;
     char buf[256];
 };
@@ -29,7 +29,7 @@ struct msg {
 
 struct client_info {
     int id;
-    int pid;
+    int qid;
 };
 
 int string_to_type(char *string) {
