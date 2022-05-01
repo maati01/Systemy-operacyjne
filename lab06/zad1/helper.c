@@ -13,6 +13,7 @@
 #define TO_ONE 4
 #define NEW_CLIENT 5
 #define WRONG_ID 6
+#define SERVER_STOP 7
 
 #include <time.h>
 

@@ -14,16 +14,20 @@ struct msg client, server;
 pid_t pid;
 int child;
 
-void stop(){
+void stop(int type){
     time_t t = time(NULL);
     client.msg_text.time = *localtime(&t);
-    client.msg_type = STOP;
+    client.msg_type = type;
     client.msg_text.id = client_id;
 
     strcpy(client.msg_text.buf, "CLIENT STOPPED");
-    if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
-        error("Error while sending STOP message");
+    if (type == STOP) {
+        if(msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1){
+            error("Error while sending STOP message");
+        }
     }
+    kill(pid, SIGINT);
+    msgctl(client_id, IPC_RMID, NULL);
     exit(EXIT_SUCCESS);
 }
 
@@ -37,7 +41,6 @@ void list(){
     if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
         error("Error while sending STOP message");
     }
-    // exit(EXIT_SUCCESS);
 }
 
 
@@ -67,14 +70,20 @@ void to_one(char* text){
 
 }
 
-//zmienic qid na pid
-//sprawdic czy dobrze dziala
-void receive_meesage(){ //moze handler trzeba ustawic
+void receive_meesage(){
     while(1){
         if(msgrcv(client_id, &server, sizeof(server.msg_text), 0, 0) == -1){
             error("ERROR");
         }
         switch(server.msg_type){
+            case STOP:
+                printf("CLIENT STOPPED!\n");
+                stop(STOP);
+                break;
+            case SERVER_STOP:
+                printf("SERVER STOPPED!\n");
+                stop(SERVER_STOP);
+                break;
             case LIST:
                 printf("\n-----------\nCLIENTS: \n%s-----------\n>>",server.msg_text.buf);
                 fflush(stdout);
@@ -84,6 +93,9 @@ void receive_meesage(){ //moze handler trzeba ustawic
                 break;
             case TO_ONE:
                 printf("New meesage: %s\n", server.msg_text.buf);
+                break;
+            case WRONG_ID:
+                printf("WRONG ID!\nYOU CANNOT SEND THE MESSAGE!");
                 break;
             
         }
@@ -108,7 +120,7 @@ void send_meesage(){
         switch (type) {
             case STOP:
                 kill(child, SIGINT);
-                stop();
+                stop(STOP);
                 break;
             case LIST:
                 list();
@@ -125,8 +137,13 @@ void send_meesage(){
                 printf("Wrong argument!\n");
                 break;
         }
-        // sleep(1);
+
     }
+}
+
+void signal_handler(){
+    //wysalac do servera info o zamknieciu
+    exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char* argv[]) {
@@ -145,10 +162,14 @@ int main(int argc, char* argv[]) {
     printf("[CLIENT] SERVER ID %d\n", server_id );
     client.msg_type = NEW_CLIENT;
     client.msg_text.id = client_id;
-    // client.msg_text.info = client_id;
     sprintf(client.msg_text.buf, "%d", client_id);
 
-    // send message to server
+    struct sigaction action;
+    action.sa_handler = signal_handler;
+    sigemptyset(&action.sa_mask);
+    sigaddset(&action.sa_mask, SIGINT);
+    action.sa_flags = 0;
+    sigaction(SIGINT, &action, NULL);
 
     if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) != -1) {
         printf("INIT action sent to the server\n");

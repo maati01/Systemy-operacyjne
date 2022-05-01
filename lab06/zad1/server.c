@@ -14,19 +14,35 @@ struct msg server, client;
 int server_id;
 
 void signal_handler(int signal_num) {
-    printf("Server: Signal SIGINT received\n");
+    printf("Server: STOPPED!\n");
     is_server_running = 0;
-    exit(0);
-    // if (active_users_counter > 0) {
-    //     send_shutdown_to_all_clients();
-    // } else {
-    //     print_sth_and_exit("Closing server!", 0);
-    // }
+
+    server.msg_type = SERVER_STOP;
+    strcpy(server.msg_text.buf, client.msg_text.buf);
+
+    for(int i = 0; i < MAX_CLIENTS_NUMBER; i++){
+        if(clients[i].id != -1){
+            if(msgsnd(clients[i].qid, &server, sizeof(server.msg_text), 0) == -1){
+                error("ERROR\n");
+            };
+        }
+        
+    }
+    exit(EXIT_SUCCESS);
 }
 
 void stop(){
     printf("[server] Client stopped, id: %d\n", client.msg_text.id);
-    clients[client.msg_text.id].id = -1;
+    server.msg_type = STOP;
+
+    for(int i = 0; i < MAX_CLIENTS_NUMBER; i++){
+        if(client.msg_text.id == clients[i].qid){
+            clients[i].id = -1;
+            clients[i].qid = -1;
+            break;
+        }
+    }
+
 }
 
 void list(){
@@ -45,7 +61,7 @@ void list(){
 }
 
 void to_all(){
-    printf("Meesage sent to all!\n");
+    printf("[server] Meesage sent to all!\n");
 
     server.msg_type = TO_ALL;
     strcpy(server.msg_text.buf, client.msg_text.buf);
@@ -53,7 +69,7 @@ void to_all(){
     for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
         if (clients[i].id != -1 && clients[i].qid != client.msg_text.id){
             if(msgsnd(clients[i].qid, &server, sizeof(server.msg_text), 0) == -1){
-                error("PRZYPS\n");
+                error("ERROR\n");
             };
         } 
         
@@ -65,14 +81,22 @@ void to_one(){
     char* command;
 
     target_id = atoi(strtok_r(client.msg_text.buf, " ", &command));
-
-    server.msg_type = TO_ONE;
     strcpy(server.msg_text.buf, command);
-    msgsnd(clients[target_id].qid, &server, sizeof(server.msg_text), 0);
-    //uzyc wrong id
+    if(clients[target_id].id != -1){
+        server.msg_type = TO_ONE; 
+        msgsnd(clients[target_id].qid, &server, sizeof(server.msg_text), 0);
+    }else{
+        server.msg_type = WRONG_ID;
+        msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0);
+    }
+
+    printf("[server] Meesage sent from %d to %d!\n", client.msg_text.id, target_id);
 }
 
+//mozna dodac sytacje gdy jest max clientow
 void new_client(){
+    int curr_usr_id = 0;
+    while(clients[curr_usr_id].id != -1) curr_usr_id++;
     clients[curr_usr_id].id = curr_usr_id;
     clients[curr_usr_id].qid = client.msg_text.id;
 
@@ -86,7 +110,6 @@ void new_client(){
 
     printf("[server] New client with id: %d\n", curr_usr_id);
 
-    ++curr_usr_id;
 }
 
 void run_command(){
@@ -126,6 +149,7 @@ int main(int argc, char** argv){
 
     key_t key = ftok(homedir, PROJ_ID);
     server_id = msgget(key, IPC_CREAT | QUEUE_PERMISSIONS);
+
     printf("[SERVER] KEY %d\n", key);
     printf("[SERVER] ID %d\n", server_id);
 
@@ -135,6 +159,7 @@ int main(int argc, char** argv){
     sigaddset(&action.sa_mask, SIGINT);
     action.sa_flags = 0;
     sigaction(SIGINT, &action, NULL);
+
     printf("Server is running!\n");
 
     while (is_server_running) {
