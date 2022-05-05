@@ -13,11 +13,19 @@ struct client_info clients[MAX_CLIENTS_NUMBER];
 struct msg server, client;
 int server_id;
 
+
+void print_time(){
+    struct tm *tm = &client.msg_text.time;
+    printf("[SERVER] %d-%02d-%02d %02d:%02d:%02d\n", tm->tm_year + 1900, tm->tm_mon + 1,
+               tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
+}
+
 void signal_handler(int signal_num) {
-    printf("Server: STOPPED!\n");
+    printf("[SERVER] STOPPED!\n");
     is_server_running = 0;
 
     server.msg_type = SERVER_STOP;
+    server.msg_text.time = client.msg_text.time;
     strcpy(server.msg_text.buf, client.msg_text.buf);
 
     for(int i = 0; i < MAX_CLIENTS_NUMBER; i++){
@@ -32,9 +40,9 @@ void signal_handler(int signal_num) {
 }
 
 void stop(){
-    printf("[server] Client stopped, id: %d\n", client.msg_text.id);
+    printf("[SERVER] Client stopped, id: %d\n", client.msg_text.sender_id);
     server.msg_type = STOP;
-
+    server.msg_text.time = client.msg_text.time;
     for(int i = 0; i < MAX_CLIENTS_NUMBER; i++){
         if(client.msg_text.id == clients[i].qid){
             clients[i].id = -1;
@@ -56,14 +64,18 @@ void list(){
         }
     }
     server.msg_type = LIST;
+    server.msg_text.time = client.msg_text.time;
+
     strcpy(server.msg_text.buf, buf);
     msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0);
 }
 
 void to_all(){
-    printf("[server] Meesage sent to all!\n");
+    printf("[SERVER] Meesage sent to all!\n");
 
     server.msg_type = TO_ALL;
+    server.msg_text.time = client.msg_text.time;
+    server.msg_text.sender_id = client.msg_text.sender_id;
     strcpy(server.msg_text.buf, client.msg_text.buf);
 
     for (int i = 0; i < MAX_CLIENTS_NUMBER; ++i) {
@@ -81,6 +93,9 @@ void to_one(){
     char* command;
 
     target_id = atoi(strtok_r(client.msg_text.buf, " ", &command));
+    server.msg_text.time = client.msg_text.time;
+    server.msg_text.sender_id = client.msg_text.sender_id;
+
     strcpy(server.msg_text.buf, command);
     if(clients[target_id].id != -1){
         server.msg_type = TO_ONE; 
@@ -90,7 +105,10 @@ void to_one(){
         msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0);
     }
 
-    printf("[server] Meesage sent from %d to %d!\n", client.msg_text.id, target_id);
+    int idx = 0;
+    while(clients[idx].qid != client.msg_text.id) idx++;
+
+    printf("[SERVER] Meesage sent from %d to %d!\n", idx, target_id);
 }
 
 //mozna dodac sytacje gdy jest max clientow
@@ -101,6 +119,7 @@ void new_client(){
     clients[curr_usr_id].qid = client.msg_text.id;
 
     server.msg_type = NEW_CLIENT;
+    server.msg_text.time = client.msg_text.time;
     server.msg_text.id = curr_usr_id;
     
     strcpy(server.msg_text.buf, "");
@@ -108,35 +127,37 @@ void new_client(){
         error("Error while sending INIT message");
     }
 
-    printf("[server] New client with id: %d\n", curr_usr_id);
+
+    printf("[SERVER] New client with id: %d\n", curr_usr_id);
 
 }
 
 void run_command(){
     switch (client.msg_type) {
         case STOP:
-            printf(">> STOP\n");
+            printf("[SERVER] STOP\n");
             stop();
             break;
         case LIST:
-            printf(">> LIST\n");
+            printf("[SERVER] LIST\n");
             list();
             break;
         case TO_ALL:
-            printf(">> TO ALL\n");
+            printf("[SERVER] TO ALL\n");
             to_all();
             break;
         case TO_ONE:
-            printf(">> TO ONE\n");
+            printf("[SERVER] TO ONE\n");
             to_one();
             break;
         case NEW_CLIENT:
-            printf(">> NEW CLIENT\n");
+            printf("[SERVER] NEW CLIENT\n");
             new_client();
             break;
         default:
             break;
     }
+    print_time();
 }
 
 int main(int argc, char** argv){
@@ -160,7 +181,7 @@ int main(int argc, char** argv){
     action.sa_flags = 0;
     sigaction(SIGINT, &action, NULL);
 
-    printf("Server is running!\n");
+    printf("[SERVER] Server is running!\n");
 
     while (is_server_running) {
         if(msgrcv(server_id, &client, sizeof(client.msg_text), 0, 0) == 1){

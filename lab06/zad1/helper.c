@@ -19,6 +19,7 @@
 
 struct msg_text {
     int id;
+    int sender_id;
     struct tm time;
     char buf[256];
 };
@@ -40,10 +41,10 @@ int string_to_type(char *string) {
     if (strcmp(string, "LIST") == 0) {
         return LIST;
     }
-    if (strcmp(string, "TO_ALL") == 0) {
+    if (strcmp(string, "2ALL") == 0) {
         return TO_ALL;
     }
-    if (strcmp(string, "TO_ONE") == 0) {
+    if (strcmp(string, "2ONE") == 0) {
         return TO_ONE;
     }
     return -1;

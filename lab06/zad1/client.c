@@ -14,6 +14,27 @@ struct msg client, server;
 pid_t pid;
 int child;
 
+void print_time(){
+    struct tm *tm = &server.msg_text.time;
+    printf("[CLIENT] %d-%02d-%02d %02d:%02d:%02d\n>>", tm->tm_year + 1900, tm->tm_mon + 1,
+               tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
+}
+
+void sending_error(int val){
+    if(val == -1){
+        printf("[CLIENT] Sending error!\n");
+        exit(EXIT_FAILURE);
+    }
+
+}
+
+void receiving_error(int val){
+    if(val == -1){
+        printf("[CLIENT] Receiving error!\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 void stop(int type){
     time_t t = time(NULL);
     client.msg_text.time = *localtime(&t);
@@ -22,9 +43,10 @@ void stop(int type){
 
     strcpy(client.msg_text.buf, "CLIENT STOPPED");
     if (type == STOP) {
-        if(msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1){
-            error("Error while sending STOP message");
-        }
+        // if(msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1){
+        //     error("Error while sending STOP message");
+        // }
+        sending_error(msgsnd(server_id, &client, sizeof(client.msg_text), 0));
     }
     kill(pid, SIGINT);
     msgctl(client_id, IPC_RMID, NULL);
@@ -38,9 +60,10 @@ void list(){
     client.msg_text.id = client_id;
 
     strcpy(client.msg_text.buf, "LIST");
-    if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
-        error("Error while sending STOP message");
-    }
+    sending_error(msgsnd(server_id, &client, sizeof(client.msg_text), 0));
+    // if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
+    //     error("Error while sending STOP message");
+    // }
 }
 
 
@@ -51,9 +74,10 @@ void to_all(char* text){
     client.msg_text.id = client_id;
 
     strcpy(client.msg_text.buf, text);
-    if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
-        error("Error while sending STOP message");
-    }
+    sending_error(msgsnd(server_id, &client, sizeof(client.msg_text), 0));
+    // if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
+    //     error("Error while sending STOP message");
+    // }
 
 }
 
@@ -64,9 +88,10 @@ void to_one(char* text){
     client.msg_text.id = client_id;
 
     strcpy(client.msg_text.buf, text);
-    if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
-        error("Error while sending STOP message");
-    }
+    sending_error(msgsnd(server_id, &client, sizeof(client.msg_text), 0));
+    // if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) == -1) {
+    //     error("Error while sending STOP message");
+    // }
 
 }
 
@@ -74,30 +99,34 @@ void receive_meesage(){
     while(1){
         if(msgrcv(client_id, &server, sizeof(server.msg_text), 0, 0) == -1){
             error("ERROR");
-        }
-        switch(server.msg_type){
-            case STOP:
-                printf("CLIENT STOPPED!\n");
-                stop(STOP);
-                break;
-            case SERVER_STOP:
-                printf("SERVER STOPPED!\n");
-                stop(SERVER_STOP);
-                break;
-            case LIST:
-                printf("\n-----------\nCLIENTS: \n%s-----------\n>>",server.msg_text.buf);
-                fflush(stdout);
-                break;
-            case TO_ALL:
-                printf("New meesage: %s\n", server.msg_text.buf);
-                break;
-            case TO_ONE:
-                printf("New meesage: %s\n", server.msg_text.buf);
-                break;
-            case WRONG_ID:
-                printf("WRONG ID!\nYOU CANNOT SEND THE MESSAGE!");
-                break;
-            
+        }else{
+            switch(server.msg_type){
+                case STOP:
+                    printf("CLIENT STOPPED!\n");
+                    stop(STOP);
+                    break;
+                case SERVER_STOP:
+                    printf("SERVER STOPPED!\n");
+                    print_time();
+                    stop(SERVER_STOP);
+                    break;
+                case LIST:
+                    printf("\n-----------\nCLIENTS: \n%s-----------\n",server.msg_text.buf);
+                    break;
+                case TO_ALL:
+                    printf("\n-----------\nNew meesage from %d:\n%s-----------\n", server.msg_text.sender_id, server.msg_text.buf);
+                    break;
+                case TO_ONE:
+                    printf("\n-----------\nNew meesage from %d:\n%s-----------\n", server.msg_text.sender_id, server.msg_text.buf);
+                
+                    break;
+                case WRONG_ID:
+                    printf("WRONG ID!\nYOU CANNOT SEND THE MESSAGE!\n");
+                    break;
+                
+            }
+            print_time();
+            fflush(stdout);
         }
     }
 }
@@ -137,7 +166,6 @@ void send_meesage(){
                 printf("Wrong argument!\n");
                 break;
         }
-
     }
 }
 
@@ -154,12 +182,14 @@ int main(int argc, char* argv[]) {
 
 
     client_id = msgget(IPC_PRIVATE, QUEUE_PERMISSIONS);
-    printf("[CLIENT] ID %d\n", client_id);
+    printf("[CLIENT] QID %d\n", client_id);
     key = ftok(homedir, PROJ_ID);
     printf("[CLIENT] KEY %d\n", key);
 
     server_id = msgget(key, 0);
     printf("[CLIENT] SERVER ID %d\n", server_id );
+    time_t t = time(NULL);
+    client.msg_text.time = *localtime(&t);
     client.msg_type = NEW_CLIENT;
     client.msg_text.id = client_id;
     sprintf(client.msg_text.buf, "%d", client_id);
@@ -171,11 +201,17 @@ int main(int argc, char* argv[]) {
     action.sa_flags = 0;
     sigaction(SIGINT, &action, NULL);
 
-    if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) != -1) {
-        printf("INIT action sent to the server\n");
-    }
-    msgrcv(client_id, &server, sizeof(server.msg_text), NEW_CLIENT, 0);
+    sending_error(msgsnd(server_id, &client, sizeof(client.msg_text), 0));
+    // printf("[CLIENT] INIT\n");
+    // if (msgsnd(server_id, &client, sizeof(client.msg_text), 0) != -1) {
+    //     printf("[CLIENT] INIT action sent to the server\n");
+    // }
+    receiving_error(msgrcv(client_id, &server, sizeof(server.msg_text), NEW_CLIENT, 0));
+    // msgrcv(client_id, &server, sizeof(server.msg_text), NEW_CLIENT, 0);
+    client.msg_text.sender_id = server.msg_text.id;
+    // client_id = server.msg_text.id;
 
+    printf("[CLIENT] ID %d\n", client.msg_text.sender_id);
     if ((child = fork()) == 0) {
         receive_meesage();
     }
