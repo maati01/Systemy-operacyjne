@@ -128,7 +128,7 @@ void to_one(){
 
     int idx = 0;
     while(clients[idx].qid != client.msg_text.id) idx++;
-
+    save_command("2ONE", idx);
     printf("[SERVER] 2ONE - meesage sent from %d to %d!\n", idx, target_id);
 }
 
@@ -142,10 +142,12 @@ void new_client(){
     if(curr_usr_id < MAX_CLIENTS_NUMBER){
         set_server_msg(NEW_CLIENT,"");
         printf("[SERVER] NEW CLIENT - ID: %d\n", curr_usr_id);
+        save_command("NEW CLIENT", curr_usr_id);
         
     }else{
         set_server_msg(MAX_CLIENTS,"");
         printf("[SERVER] Clients limit has been reached!\n");
+        save_info("Clients limit has been reached!");
     }
     sending_error(msgsnd(client.msg_text.id, &server, sizeof(server.msg_text), 0));
     
@@ -169,11 +171,9 @@ void run_command(){
             to_all();
             break;
         case TO_ONE:
-            save_command("2ONE", client.msg_text.sender_id);
             to_one();
             break;
         case NEW_CLIENT:
-            save_command("NEW CLIENT", client.msg_text.sender_id);
             new_client();
             break;
         default:
@@ -212,7 +212,7 @@ int main(int argc, char** argv){
 
     time_t t = time(NULL);
     server.msg_text.time = *localtime(&t);
-    
+
     print_time();
     save_info("Server is running!");
 
