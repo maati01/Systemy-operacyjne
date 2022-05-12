@@ -1,95 +1,136 @@
 N = 4 M = 4
 
-COOK pid: 9621 timestamp: 16:20:06:802 Przygotowuje pizze: 4
-COOK pid: 9620 timestamp: 16:20:06:803 Przygotowuje pizze: 8
-COOK pid: 9619 timestamp: 16:20:06:803 Przygotowuje pizze: 8
-COOK pid: 9618 timestamp: 16:20:06:803 Przygotowuje pizze: 0
-COOK pid: 9621 timestamp: 16:20:08:803 Dodałem pizze: 4. Liczba pizz w piecu: 1
-COOK pid: 9620 timestamp: 16:20:08:803 Dodałem pizze: 8. Liczba pizz w piecu: 2
-COOK pid: 9619 timestamp: 16:20:08:803 Dodałem pizze: 8. Liczba pizz w piecu: 3
-COOK pid: 9618 timestamp: 16:20:08:803 Dodałem pizze: 0. Liczba pizz w piecu: 4
-COOK pid: 9621 timestamp: 16:20:13:803 Wyjmuję pizze: 4. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
-COOK pid: 9621 timestamp: 16:20:13:803 Umieszczam pizze na stole: 4. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
-COOK pid: 9621 timestamp: 16:20:13:803 Przygotowuje pizze: 2
-SUPPLIER pid: 9624 timestamp: 16:20:13:803 Pobieram pizze: 4. Liczba pizz na stole: 0
-COOK pid: 9620 timestamp: 16:20:13:803 Wyjmuję pizze: 8. Liczba pizz w piecu: 2. Liczba pizz na stole: 0
-COOK pid: 9620 timestamp: 16:20:13:803 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 2. Liczba pizz na stole: 1
-COOK pid: 9620 timestamp: 16:20:13:803 Przygotowuje pizze: 7
-SUPPLIER pid: 9625 timestamp: 16:20:13:803 Pobieram pizze: 8. Liczba pizz na stole: 0
-COOK pid: 9619 timestamp: 16:20:13:804 Wyjmuję pizze: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 0
-COOK pid: 9619 timestamp: 16:20:13:804 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 1
-SUPPLIER pid: 9623 timestamp: 16:20:13:804 Pobieram pizze: 8. Liczba pizz na stole: 0
-COOK pid: 9619 timestamp: 16:20:13:804 Przygotowuje pizze: 6
-COOK pid: 9618 timestamp: 16:20:13:804 Wyjmuję pizze: 0. Liczba pizz w piecu: 0. Liczba pizz na stole: 0
-COOK pid: 9618 timestamp: 16:20:13:804 Umieszczam pizze na stole: 0. Liczba pizz w piecu: 0. Liczba pizz na stole: 1
-SUPPLIER pid: 9622 timestamp: 16:20:13:804 Pobieram pizze: 0. Liczba pizz na stole: 0
-COOK pid: 9618 timestamp: 16:20:13:804 Przygotowuje pizze: 1
-COOK pid: 9621 timestamp: 16:20:15:803 Dodałem pizze: 2. Liczba pizz w piecu: 1
-COOK pid: 9620 timestamp: 16:20:15:804 Dodałem pizze: 7. Liczba pizz w piecu: 2
-COOK pid: 9619 timestamp: 16:20:15:804 Dodałem pizze: 6. Liczba pizz w piecu: 3
-COOK pid: 9618 timestamp: 16:20:15:804 Dodałem pizze: 1. Liczba pizz w piecu: 4
-SUPPLIER pid: 9624 timestamp: 16:20:18:803 Dostarczam pizze: 4
-SUPPLIER pid: 9625 timestamp: 16:20:18:804 Dostarczam pizze: 8
-SUPPLIER pid: 9623 timestamp: 16:20:18:804 Dostarczam pizze: 8
-SUPPLIER pid: 9622 timestamp: 16:20:18:804 Dostarczam pizze: 0
+pid: 11031 timestamp: 17:08:25:383 Przygotowuje pizze: 0
+pid: 11030 timestamp: 17:08:25:383 Przygotowuje pizze: 4
+pid: 11029 timestamp: 17:08:25:383 Przygotowuje pizze: 8
+pid: 11028 timestamp: 17:08:25:384 Przygotowuje pizze: 9
+pid: 11031 timestamp: 17:08:27:383 Dodałem pizze: 0. Liczba pizz w piecu: 1
+pid: 11030 timestamp: 17:08:27:383 Dodałem pizze: 4. Liczba pizz w piecu: 2
+pid: 11029 timestamp: 17:08:27:384 Dodałem pizze: 8. Liczba pizz w piecu: 3
+pid: 11028 timestamp: 17:08:27:384 Dodałem pizze: 9. Liczba pizz w piecu: 4
+pid: 11031 timestamp: 17:08:32:384 Wyjmuję pizze: 0. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
+pid: 11031 timestamp: 17:08:32:384 Umieszczam pizze na stole: 0. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
+pid: 11031 timestamp: 17:08:32:384 Przygotowuje pizze: 6
+pid: 11034 timestamp: 17:08:32:384 Pobieram pizze: 0. Liczba pizz na stole: 0
+pid: 11030 timestamp: 17:08:32:384 Wyjmuję pizze: 4. Liczba pizz w piecu: 2. Liczba pizz na stole: 0
+pid: 11030 timestamp: 17:08:32:384 Umieszczam pizze na stole: 4. Liczba pizz w piecu: 2. Liczba pizz na stole: 1
+pid: 11030 timestamp: 17:08:32:384 Przygotowuje pizze: 6
+pid: 11035 timestamp: 17:08:32:384 Pobieram pizze: 4. Liczba pizz na stole: 0
+pid: 11029 timestamp: 17:08:32:385 Wyjmuję pizze: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 0
+pid: 11029 timestamp: 17:08:32:385 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 1
+pid: 11032 timestamp: 17:08:32:385 Pobieram pizze: 8. Liczba pizz na stole: 0
+pid: 11029 timestamp: 17:08:32:385 Przygotowuje pizze: 1
+pid: 11028 timestamp: 17:08:32:385 Wyjmuję pizze: 9. Liczba pizz w piecu: 0. Liczba pizz na stole: 0
+pid: 11028 timestamp: 17:08:32:385 Umieszczam pizze na stole: 9. Liczba pizz w piecu: 0. Liczba pizz na stole: 1
+pid: 11033 timestamp: 17:08:32:385 Pobieram pizze: 9. Liczba pizz na stole: 0
+pid: 11028 timestamp: 17:08:32:386 Przygotowuje pizze: 5
+pid: 11031 timestamp: 17:08:34:384 Dodałem pizze: 6. Liczba pizz w piecu: 1
+pid: 11030 timestamp: 17:08:34:384 Dodałem pizze: 6. Liczba pizz w piecu: 2
+pid: 11029 timestamp: 17:08:34:393 Dodałem pizze: 1. Liczba pizz w piecu: 3
+pid: 11028 timestamp: 17:08:34:393 Dodałem pizze: 5. Liczba pizz w piecu: 4
+pid: 11034 timestamp: 17:08:37:384 Dostarczam pizze: 0
+pid: 11035 timestamp: 17:08:37:385 Dostarczam pizze: 4
+pid: 11032 timestamp: 17:08:37:385 Dostarczam pizze: 8
+pid: 11033 timestamp: 17:08:37:386 Dostarczam pizze: 9
+pid: 11031 timestamp: 17:08:39:384 Wyjmuję pizze: 6. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
+pid: 11031 timestamp: 17:08:39:384 Umieszczam pizze na stole: 6. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
+pid: 11031 timestamp: 17:08:39:384 Przygotowuje pizze: 2
+pid: 11030 timestamp: 17:08:39:385 Wyjmuję pizze: 6. Liczba pizz w piecu: 2. Liczba pizz na stole: 1
+pid: 11030 timestamp: 17:08:39:385 Umieszczam pizze na stole: 6. Liczba pizz w piecu: 2. Liczba pizz na stole: 2
+pid: 11030 timestamp: 17:08:39:385 Przygotowuje pizze: 6
+pid: 11029 timestamp: 17:08:39:393 Wyjmuję pizze: 1. Liczba pizz w piecu: 1. Liczba pizz na stole: 2
+pid: 11029 timestamp: 17:08:39:393 Umieszczam pizze na stole: 1. Liczba pizz w piecu: 1. Liczba pizz na stole: 3
+pid: 11029 timestamp: 17:08:39:393 Przygotowuje pizze: 4
+pid: 11028 timestamp: 17:08:39:393 Wyjmuję pizze: 5. Liczba pizz w piecu: 0. Liczba pizz na stole: 3
+pid: 11028 timestamp: 17:08:39:393 Umieszczam pizze na stole: 5. Liczba pizz w piecu: 0. Liczba pizz na stole: 4
+pid: 11028 timestamp: 17:08:39:393 Przygotowuje pizze: 7
+
 
 
 N = 8 M = 10
-COOK pid: 9688 timestamp: 16:21:01:255 Przygotowuje pizze: 5
-COOK pid: 9689 timestamp: 16:21:01:255 Przygotowuje pizze: 2
-COOK pid: 9687 timestamp: 16:21:01:256 Przygotowuje pizze: 8
-COOK pid: 9684 timestamp: 16:21:01:260 Przygotowuje pizze: 5
-COOK pid: 9685 timestamp: 16:21:01:260 Przygotowuje pizze: 4
-COOK pid: 9686 timestamp: 16:21:01:257 Przygotowuje pizze: 6
-COOK pid: 9683 timestamp: 16:21:01:260 Przygotowuje pizze: 2
-COOK pid: 9682 timestamp: 16:21:01:261 Przygotowuje pizze: 3
-COOK pid: 9688 timestamp: 16:21:03:260 Dodałem pizze: 5. Liczba pizz w piecu: 1
-COOK pid: 9687 timestamp: 16:21:03:260 Dodałem pizze: 8. Liczba pizz w piecu: 2
-COOK pid: 9689 timestamp: 16:21:03:260 Dodałem pizze: 2. Liczba pizz w piecu: 3
-COOK pid: 9685 timestamp: 16:21:03:260 Dodałem pizze: 4. Liczba pizz w piecu: 4
-COOK pid: 9686 timestamp: 16:21:03:260 Dodałem pizze: 6. Liczba pizz w piecu: 5
-COOK pid: 9688 timestamp: 16:21:08:260 Wyjmuję pizze: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
-COOK pid: 9688 timestamp: 16:21:08:260 Umieszczam pizze na stole: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
-COOK pid: 9688 timestamp: 16:21:08:260 Przygotowuje pizze: 2
-SUPPLIER pid: 9690 timestamp: 16:21:08:260 Pobieram pizze: 5. Liczba pizz na stole: 0
-COOK pid: 9684 timestamp: 16:21:08:261 Dodałem pizze: 5. Liczba pizz w piecu: 5
-COOK pid: 9689 timestamp: 16:21:08:261 Wyjmuję pizze: 8. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
-COOK pid: 9689 timestamp: 16:21:08:261 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
-COOK pid: 9689 timestamp: 16:21:08:261 Przygotowuje pizze: 4
-SUPPLIER pid: 9691 timestamp: 16:21:08:261 Pobieram pizze: 8. Liczba pizz na stole: 0
-COOK pid: 9687 timestamp: 16:21:08:261 Wyjmuję pizze: 2. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
-COOK pid: 9687 timestamp: 16:21:08:261 Umieszczam pizze na stole: 2. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
-COOK pid: 9687 timestamp: 16:21:08:261 Przygotowuje pizze: 3
-SUPPLIER pid: 9692 timestamp: 16:21:08:261 Pobieram pizze: 2. Liczba pizz na stole: 0
-COOK pid: 9685 timestamp: 16:21:08:262 Wyjmuję pizze: 4. Liczba pizz w piecu: 2. Liczba pizz na stole: 0
-COOK pid: 9685 timestamp: 16:21:08:262 Umieszczam pizze na stole: 4. Liczba pizz w piecu: 2. Liczba pizz na stole: 1
-COOK pid: 9686 timestamp: 16:21:08:262 Wyjmuję pizze: 6. Liczba pizz w piecu: 1. Liczba pizz na stole: 1
-COOK pid: 9685 timestamp: 16:21:08:262 Przygotowuje pizze: 2
-SUPPLIER pid: 9694 timestamp: 16:21:08:263 Pobieram pizze: 4. Liczba pizz na stole: 0
-COOK pid: 9686 timestamp: 16:21:08:264 Umieszczam pizze na stole: 6. Liczba pizz w piecu: 1. Liczba pizz na stole: 1
-COOK pid: 9686 timestamp: 16:21:08:265 Przygotowuje pizze: 4
-SUPPLIER pid: 9695 timestamp: 16:21:08:265 Pobieram pizze: 6. Liczba pizz na stole: 0
-COOK pid: 9683 timestamp: 16:21:08:266 Dodałem pizze: 2. Liczba pizz w piecu: 2
-COOK pid: 9682 timestamp: 16:21:08:266 Dodałem pizze: 3. Liczba pizz w piecu: 3
-COOK pid: 9688 timestamp: 16:21:10:261 Dodałem pizze: 2. Liczba pizz w piecu: 4
-COOK pid: 9689 timestamp: 16:21:10:261 Dodałem pizze: 4. Liczba pizz w piecu: 5
-SUPPLIER pid: 9690 timestamp: 16:21:13:261 Dostarczam pizze: 5
-SUPPLIER pid: 9691 timestamp: 16:21:13:262 Dostarczam pizze: 8
-COOK pid: 9684 timestamp: 16:21:13:262 Wyjmuję pizze: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
-COOK pid: 9684 timestamp: 16:21:13:262 Umieszczam pizze na stole: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
-COOK pid: 9684 timestamp: 16:21:13:262 Przygotowuje pizze: 2
-SUPPLIER pid: 9696 timestamp: 16:21:13:262 Pobieram pizze: 5. Liczba pizz na stole: 0
-COOK pid: 9687 timestamp: 16:21:13:262 Dodałem pizze: 3. Liczba pizz w piecu: 5
-SUPPLIER pid: 9692 timestamp: 16:21:13:262 Dostarczam pizze: 2
-SUPPLIER pid: 9694 timestamp: 16:21:13:264 Dostarczam pizze: 4
-SUPPLIER pid: 9695 timestamp: 16:21:13:266 Dostarczam pizze: 6
-COOK pid: 9683 timestamp: 16:21:13:266 Wyjmuję pizze: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
-COOK pid: 9683 timestamp: 16:21:13:266 Umieszczam pizze na stole: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
-SUPPLIER pid: 9693 timestamp: 16:21:13:266 Pobieram pizze: 2. Liczba pizz na stole: 0
-COOK pid: 9685 timestamp: 16:21:13:266 Dodałem pizze: 2. Liczba pizz w piecu: 5
-COOK pid: 9683 timestamp: 16:21:13:266 Przygotowuje pizze: 6
-COOK pid: 9682 timestamp: 16:21:13:266 Wyjmuję pizze: 3. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
-COOK pid: 9686 timestamp: 16:21:13:267 Dodałem pizze: 4. Liczba pizz w piecu: 5
-COOK pid: 9682 timestamp: 16:21:13:267 Umieszczam pizze na stole: 3. Liczba pizz w piecu: 5. Liczba pizz na stole: 1
-SUPPLIER pid: 9698 timestamp: 16:21:13:267 Pobieram pizze: 3. Liczba pizz na stole: 0
-COOK pid: 9682 timestamp: 16:21:13:267 Przygotowuje pizze: 7
+pid: 11103 timestamp: 17:09:34:665 Przygotowuje pizze: 6
+pid: 11102 timestamp: 17:09:34:665 Przygotowuje pizze: 8
+pid: 11104 timestamp: 17:09:34:667 Przygotowuje pizze: 0
+pid: 11101 timestamp: 17:09:34:667 Przygotowuje pizze: 8
+pid: 11099 timestamp: 17:09:34:669 Przygotowuje pizze: 2
+pid: 11100 timestamp: 17:09:34:669 Przygotowuje pizze: 0
+pid: 11098 timestamp: 17:09:34:670 Przygotowuje pizze: 2
+pid: 11097 timestamp: 17:09:34:670 Przygotowuje pizze: 7
+pid: 11103 timestamp: 17:09:36:669 Dodałem pizze: 6. Liczba pizz w piecu: 1
+pid: 11102 timestamp: 17:09:36:669 Dodałem pizze: 8. Liczba pizz w piecu: 2
+pid: 11104 timestamp: 17:09:36:669 Dodałem pizze: 0. Liczba pizz w piecu: 3
+pid: 11101 timestamp: 17:09:36:669 Dodałem pizze: 8. Liczba pizz w piecu: 4
+pid: 11100 timestamp: 17:09:36:669 Dodałem pizze: 0. Liczba pizz w piecu: 5
+pid: 11103 timestamp: 17:09:41:669 Wyjmuję pizze: 6. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11103 timestamp: 17:09:41:670 Umieszczam pizze na stole: 6. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11103 timestamp: 17:09:41:670 Przygotowuje pizze: 9
+pid: 11105 timestamp: 17:09:41:670 Pobieram pizze: 6. Liczba pizz na stole: 0
+pid: 11104 timestamp: 17:09:41:670 Wyjmuję pizze: 8. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
+pid: 11104 timestamp: 17:09:41:670 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
+pid: 11104 timestamp: 17:09:41:670 Przygotowuje pizze: 0
+pid: 11106 timestamp: 17:09:41:670 Pobieram pizze: 8. Liczba pizz na stole: 0
+pid: 11102 timestamp: 17:09:41:670 Wyjmuję pizze: 0. Liczba pizz w piecu: 2. Liczba pizz na stole: 0
+pid: 11102 timestamp: 17:09:41:670 Umieszczam pizze na stole: 0. Liczba pizz w piecu: 2. Liczba pizz na stole: 1
+pid: 11102 timestamp: 17:09:41:670 Przygotowuje pizze: 6
+pid: 11107 timestamp: 17:09:41:670 Pobieram pizze: 0. Liczba pizz na stole: 0
+pid: 11101 timestamp: 17:09:41:670 Wyjmuję pizze: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 0
+pid: 11101 timestamp: 17:09:41:670 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 1. Liczba pizz na stole: 1
+pid: 11101 timestamp: 17:09:41:670 Przygotowuje pizze: 8
+pid: 11108 timestamp: 17:09:41:670 Pobieram pizze: 8. Liczba pizz na stole: 0
+pid: 11100 timestamp: 17:09:41:671 Wyjmuję pizze: 0. Liczba pizz w piecu: 0. Liczba pizz na stole: 0
+pid: 11100 timestamp: 17:09:41:671 Umieszczam pizze na stole: 0. Liczba pizz w piecu: 0. Liczba pizz na stole: 1
+pid: 11100 timestamp: 17:09:41:671 Przygotowuje pizze: 5
+pid: 11109 timestamp: 17:09:41:671 Pobieram pizze: 0. Liczba pizz na stole: 0
+pid: 11099 timestamp: 17:09:41:671 Dodałem pizze: 2. Liczba pizz w piecu: 1
+pid: 11098 timestamp: 17:09:41:671 Dodałem pizze: 2. Liczba pizz w piecu: 2
+pid: 11097 timestamp: 17:09:41:671 Dodałem pizze: 7. Liczba pizz w piecu: 3
+pid: 11103 timestamp: 17:09:43:670 Dodałem pizze: 9. Liczba pizz w piecu: 4
+pid: 11104 timestamp: 17:09:43:670 Dodałem pizze: 0. Liczba pizz w piecu: 5
+pid: 11105 timestamp: 17:09:46:670 Dostarczam pizze: 6
+pid: 11106 timestamp: 17:09:46:670 Dostarczam pizze: 8
+pid: 11107 timestamp: 17:09:46:670 Dostarczam pizze: 0
+pid: 11108 timestamp: 17:09:46:671 Dostarczam pizze: 8
+pid: 11109 timestamp: 17:09:46:671 Dostarczam pizze: 0
+pid: 11099 timestamp: 17:09:46:671 Wyjmuję pizze: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11099 timestamp: 17:09:46:672 Umieszczam pizze na stole: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11099 timestamp: 17:09:46:672 Przygotowuje pizze: 9
+pid: 11110 timestamp: 17:09:46:672 Pobieram pizze: 2. Liczba pizz na stole: 0
+pid: 11102 timestamp: 17:09:46:672 Dodałem pizze: 6. Liczba pizz w piecu: 5
+pid: 11098 timestamp: 17:09:46:672 Wyjmuję pizze: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11098 timestamp: 17:09:46:672 Umieszczam pizze na stole: 2. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11111 timestamp: 17:09:46:672 Pobieram pizze: 2. Liczba pizz na stole: 0
+pid: 11101 timestamp: 17:09:46:672 Dodałem pizze: 8. Liczba pizz w piecu: 5
+pid: 11098 timestamp: 17:09:46:672 Przygotowuje pizze: 0
+pid: 11097 timestamp: 17:09:46:672 Wyjmuję pizze: 7. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11100 timestamp: 17:09:46:672 Dodałem pizze: 5. Liczba pizz w piecu: 5
+pid: 11097 timestamp: 17:09:46:672 Umieszczam pizze na stole: 7. Liczba pizz w piecu: 5. Liczba pizz na stole: 1
+pid: 11112 timestamp: 17:09:46:672 Pobieram pizze: 7. Liczba pizz na stole: 0
+pid: 11097 timestamp: 17:09:46:673 Przygotowuje pizze: 2
+pid: 11104 timestamp: 17:09:48:670 Wyjmuję pizze: 9. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11104 timestamp: 17:09:48:670 Umieszczam pizze na stole: 9. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11104 timestamp: 17:09:48:670 Przygotowuje pizze: 5
+pid: 11113 timestamp: 17:09:48:670 Pobieram pizze: 9. Liczba pizz na stole: 0
+pid: 11103 timestamp: 17:09:48:671 Wyjmuję pizze: 0. Liczba pizz w piecu: 3. Liczba pizz na stole: 0
+pid: 11103 timestamp: 17:09:48:671 Umieszczam pizze na stole: 0. Liczba pizz w piecu: 3. Liczba pizz na stole: 1
+pid: 11103 timestamp: 17:09:48:671 Przygotowuje pizze: 4
+pid: 11114 timestamp: 17:09:48:671 Pobieram pizze: 0. Liczba pizz na stole: 0
+pid: 11099 timestamp: 17:09:48:672 Dodałem pizze: 9. Liczba pizz w piecu: 4
+pid: 11098 timestamp: 17:09:48:672 Dodałem pizze: 0. Liczba pizz w piecu: 5
+pid: 11102 timestamp: 17:09:51:672 Wyjmuję pizze: 6. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11102 timestamp: 17:09:51:672 Umieszczam pizze na stole: 6. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11102 timestamp: 17:09:51:672 Przygotowuje pizze: 9
+pid: 11110 timestamp: 17:09:51:672 Dostarczam pizze: 2
+pid: 11105 timestamp: 17:09:51:672 Pobieram pizze: 6. Liczba pizz na stole: 0
+pid: 11097 timestamp: 17:09:51:672 Dodałem pizze: 2. Liczba pizz w piecu: 5
+pid: 11101 timestamp: 17:09:51:672 Wyjmuję pizze: 8. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11101 timestamp: 17:09:51:672 Umieszczam pizze na stole: 8. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11101 timestamp: 17:09:51:672 Przygotowuje pizze: 0
+pid: 11106 timestamp: 17:09:51:672 Pobieram pizze: 8. Liczba pizz na stole: 0
+pid: 11111 timestamp: 17:09:51:672 Dostarczam pizze: 2
+pid: 11104 timestamp: 17:09:51:672 Dodałem pizze: 5. Liczba pizz w piecu: 5
+pid: 11100 timestamp: 17:09:51:673 Wyjmuję pizze: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 0
+pid: 11100 timestamp: 17:09:51:673 Umieszczam pizze na stole: 5. Liczba pizz w piecu: 4. Liczba pizz na stole: 1
+pid: 11100 timestamp: 17:09:51:673 Przygotowuje pizze: 9
+pid: 11107 timestamp: 17:09:51:673 Pobieram pizze: 5. Liczba pizz na stole: 0
+pid: 11103 timestamp: 17:09:51:673 Dodałem pizze: 4. Liczba pizz w piecu: 5
+pid: 11112 timestamp: 17:09:51:673 Dostarczam pizze: 7

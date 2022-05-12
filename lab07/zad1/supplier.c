@@ -8,19 +8,20 @@
 
 int is_running = 1;
 
-void place_on_table(struct table* table, int type){
-    table->array[table->place_idx] = type;
-    table->place_idx++;
-    table->place_idx = table->place_idx % TABLE_SIZE;
-    table->pizzas++;
-}
 
-int take_pizza(struct table* table){
+int take_pizza(struct table* table, int sem_id){
     int type = table->array[table->take_out_idx];
     table->array[table->take_out_idx] = -1;
     table->take_out_idx++;
     table->take_out_idx = table->take_out_idx % TABLE_SIZE;
     table->pizzas--;
+
+    printf("pid: %d timestamp: %s Pobieram pizze: %d. Liczba pizz na stole: %d\n",
+     getpid(), get_time(), type, table->pizzas);
+        
+    unblock_sem(sem_id, TABLE_SEM);
+    unblock_sem(sem_id, MAX_TABLE_SEM);
+
     return type;
 }
 
@@ -37,18 +38,10 @@ int main(){
         block_sem(sem_id, EMPTY_TABLE_SEM);
         block_sem(sem_id, TABLE_SEM);
 
-        type = take_pizza(table);
-        printf("SUPPLIER pid: %d timestamp: %s Pobieram pizze: %d. Liczba pizz na stole: %d\n", getpid(), get_time(), type, table->pizzas);
-        
-        unblock_sem(sem_id, TABLE_SEM);
-        unblock_sem(sem_id, MAX_TABLE_SEM);
+        type = take_pizza(table, sem_id);
 
         sleep(DELIVERY_TIME);
-
-        printf("SUPPLIER pid: %d timestamp: %s Dostarczam pizze: %d\n", getpid(), get_time(), type);
+        printf("pid: %d timestamp: %s Dostarczam pizze: %d\n", getpid(), get_time(), type);
         sleep(RETURN_TIME);
-
     }
-
-
 }
