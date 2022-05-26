@@ -1,0 +1,106 @@
+Czasy w poszczególnych wątkach mogą się różnić nawet kilkukrotnie.
+Zdarza się, że wzrost liczby wątków nie zmniejsza czasu programu. 
+Wariant "block" wydaję się być znacznie szybszy wraz ze wzrostem liczby wątków. 
+
+threads number: 1
+variant: numbers
+thread:   0   time:  5520 [μs]
+time:  6497 [μs]
+
+threads number: 2
+variant: numbers
+thread:   0   time:  1347 [μs]
+thread:   1   time:   814 [μs]
+time:  2633 [μs]
+
+threads number: 4
+variant: numbers
+thread:   0   time: 12087 [μs]
+thread:   1   time:   780 [μs]
+thread:   2   time:   733 [μs]
+thread:   3   time:  1582 [μs]
+time: 17703 [μs]
+
+threads number: 8
+variant: numbers
+thread:   0   time:  1232 [μs]
+thread:   1   time:   776 [μs]
+thread:   2   time:   786 [μs]
+thread:   3   time:   798 [μs]
+thread:   4   time:  2478 [μs]
+thread:   5   time:   770 [μs]
+thread:   6   time:   647 [μs]
+thread:   7   time:   642 [μs]
+time:  7509 [μs]
+
+threads number: 16
+variant: numbers
+thread:   0   time: 21369 [μs]
+thread:   1   time:   887 [μs]
+thread:   2   time:   794 [μs]
+thread:   3   time:   828 [μs]
+thread:   4   time: 40683 [μs]
+thread:   5   time:   788 [μs]
+thread:   6   time:   829 [μs]
+thread:   7   time: 36074 [μs]
+thread:   8   time:   782 [μs]
+thread:   9   time:   866 [μs]
+thread:  10   time: 33344 [μs]
+thread:  11   time: 38143 [μs]
+thread:  12   time:   750 [μs]
+thread:  13   time:   657 [μs]
+thread:  14   time:   652 [μs]
+thread:  15   time:   731 [μs]
+time: 74319 [μs]
+
+threads number: 1
+variant: block
+thread:   0   time:   771 [μs]
+time:  1323 [μs]
+
+threads number: 2
+variant: block
+thread:   0   time:   438 [μs]
+thread:   1   time:   424 [μs]
+time:  6711 [μs]
+
+threads number: 4
+variant: block
+thread:   0   time:   204 [μs]
+thread:   1   time:   221 [μs]
+thread:   2   time:   244 [μs]
+thread:   3   time:   294 [μs]
+time:  1584 [μs]
+
+threads number: 8
+variant: block
+thread:   0   time:   345 [μs]
+thread:   1   time:   374 [μs]
+thread:   2   time:   119 [μs]
+thread:   3   time:   209 [μs]
+thread:   4   time:  1300 [μs]
+thread:   5   time:   154 [μs]
+thread:   6   time:   118 [μs]
+thread:   7   time:   111 [μs]
+time:  9186 [μs]
+
+threads number: 16
+variant: block
+thread:   0   time:    53 [μs]
+thread:   1   time:   106 [μs]
+thread:   2   time:    81 [μs]
+thread:   3   time:    53 [μs]
+thread:   4   time:    55 [μs]
+thread:   5   time:    54 [μs]
+thread:   6   time:    83 [μs]
+thread:   7   time:    64 [μs]
+thread:   8   time:    54 [μs]
+thread:   9   time:    78 [μs]
+thread:  10   time:    55 [μs]
+thread:  11   time:    50 [μs]
+thread:  12   time:    50 [μs]
+thread:  13   time:    53 [μs]
+thread:  14   time:    50 [μs]
+thread:  15   time:    50 [μs]
+time:  5182 [μs]
+
